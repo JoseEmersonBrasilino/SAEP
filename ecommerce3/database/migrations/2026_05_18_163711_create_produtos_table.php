@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('movimentos', function (Blueprint $table) {
+        Schema::create('produtos', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
-            $table->string('marca');
-            $table->integer('estoque')->default(0);
             $table->timestamps();
         });
     }
@@ -25,6 +22,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movimentos');
+        Schema::dropIfExists('produtos');
+        $table->id();
+
+        $table->foreignid('produto_id') ->constraint()->cascadeondelete();
+
+        $table->integer('quantidade');
+        $table->enum('tipo',['entrada','saida']);
+        $table->timestamps();
     }
 };
